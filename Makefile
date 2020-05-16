@@ -346,6 +346,7 @@ ifeq ($(PLATFORM),PLATFORM_RPI)
     # Libraries for Raspberry Pi compiling
     # NOTE: Required packages: libasound2-dev (ALSA)
     LDLIBS = -lraylib -lbrcmGLESv2 -lbrcmEGL -lpthread -lrt -lm -lbcm_host -ldl
+    LDLIBS += -lyaml
 endif
 ifeq ($(PLATFORM),PLATFORM_WEB)
     # Libraries for web (HTML5) compiling
@@ -494,7 +495,7 @@ physics: $(PHYSICS)
 ifeq ($(PLATFORM),PLATFORM_ANDROID)
 	$(MAKE) -f Makefile.Android PROJECT_NAME=$@ PROJECT_SOURCE_FILES=$<
 else
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
+	$(CC) -o $@$(EXT) $< $(wildcard src/*.c) $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 endif
 
 # Clean everything
