@@ -4,6 +4,9 @@
 #include "raylib.h"
 #include "configuration.h"
 
+int g_width = 800;
+int g_height = 600;
+int g_border = 50;
 yaml_parser_t parser;
 yaml_event_t event;
 
@@ -121,37 +124,27 @@ struct dashboard_element* parseDashboardElementsProperties() {
 			case YAML_SCALAR_EVENT:
 				if (isValue) {
 					if (strcmp(value, "name") == 0) {
-						TraceLog(LOG_INFO, "+%s = %s", value, event.data.scalar.value);
 						pElement->name = (yaml_char_t *)strdup((char *)event.data.scalar.value);
 					} else if (strcmp(value, "type") == 0) {
-						TraceLog(LOG_INFO, "+%s = %s", value, event.data.scalar.value);
 						pElement->type = (yaml_char_t *)strdup((char *)event.data.scalar.value);
 					} else if (strcmp(value, "format") == 0) {
-						TraceLog(LOG_INFO, "+%s = %s", value, event.data.scalar.value);
 						pElement->format = (yaml_char_t *)strdup((char *)event.data.scalar.value);
 					} else if (strcmp(value, "width") == 0) {
-						TraceLog(LOG_INFO, "+%s = %s", value, event.data.scalar.value);
 						getWidth(event.data.scalar.value, pElement);
 					} else if (strcmp(value, "height") == 0) {
-						TraceLog(LOG_INFO, "+%s = %s", value, event.data.scalar.value);
 						getHeight(event.data.scalar.value, pElement);
 					} else if (strcmp(value, "left") == 0) {
-						TraceLog(LOG_INFO, "+%s = %s", value, event.data.scalar.value);
 						getLeft(event.data.scalar.value, pElement);
 					} else if (strcmp(value, "top") == 0) {
-						TraceLog(LOG_INFO, "+%s = %s", value, event.data.scalar.value);
 						getTop(event.data.scalar.value, pElement);
 					} else if (strcmp(value, "position") == 0) {
-						TraceLog(LOG_INFO, "+%s = %s", value, event.data.scalar.value);
 						pElement->position = (yaml_char_t *)strdup((char *)event.data.scalar.value);
 					} else if (strcmp(value, "color") == 0) {
-						TraceLog(LOG_INFO, "+%s = %s", value, event.data.scalar.value);
 						getElementColor(event.data.scalar.value, pElement);
 					} else if (strcmp(value, "filename") == 0) {
-						TraceLog(LOG_INFO, "+%s = %s", value, event.data.scalar.value);
 						pElement->filename = (yaml_char_t *)strdup((char *)event.data.scalar.value);
 					} else {
-						TraceLog(LOG_INFO, "%s = %s", value, event.data.scalar.value);
+						TraceLog(LOG_ERROR, "parseDashboardElementsProperties");
 					}
 					isValue = false;
 				} else {
@@ -160,12 +153,10 @@ struct dashboard_element* parseDashboardElementsProperties() {
 				}
 				break;
 			case YAML_MAPPING_END_EVENT:
-				TraceLog(LOG_INFO, "}");
 				done = true;
 				break;
 			default:
-				TraceLog(LOG_INFO, "ERROR - parseDashboardElementsProperties");
-				done = true;
+				TraceLog(LOG_ERROR, "parseDashboardElementsProperties");
 				break;
 		}
 	}
@@ -186,15 +177,12 @@ struct dashboard_element* parseDashboardElements() {
 		}
 		switch (event.type) {
 			case YAML_SEQUENCE_END_EVENT:
-				TraceLog(LOG_INFO, "]");
 				done = true;
 				break;
 			case YAML_MAPPING_START_EVENT:
-				TraceLog(LOG_INFO, "{");
 				pItem = parseDashboardElementsProperties();
 				if (pItem == 0) {
-					TraceLog(LOG_INFO, "ERROR - parseDashboardElements");
-					done = true;
+					TraceLog(LOG_ERROR, "parseDashboardElements");
 				} else {
 					if (pPointer == 0) {
 						pList = pPointer = pItem;
@@ -205,8 +193,7 @@ struct dashboard_element* parseDashboardElements() {
 				}
 				break;
 			default:
-				TraceLog(LOG_INFO, "ERROR - parseDashboardElements");
-				done = true;
+				TraceLog(LOG_ERROR, "parseDashboardElements");
 				break;
 		}
 	}
@@ -248,13 +235,11 @@ struct dashboard* parseDashboardProperties() {
 			case YAML_SCALAR_EVENT:
 				if (isValue) {
 					if (strcmp(value, "name") == 0) {
-						TraceLog(LOG_INFO, "+%s = %s", value, event.data.scalar.value);
 						pDashboard->name = (yaml_char_t*)strdup((char*)event.data.scalar.value);
 					} else if (strcmp(value, "background") == 0) {
-						TraceLog(LOG_INFO, "+%s = %s", value, event.data.scalar.value);
 						getDashboardBackground(event.data.scalar.value, pDashboard);
 					} else {
-						TraceLog(LOG_INFO, "%s = %s", value, event.data.scalar.value);
+						TraceLog(LOG_ERROR, "parseDashboardProperties");
 					}
 					isValue = false;
 				} else {
@@ -264,20 +249,17 @@ struct dashboard* parseDashboardProperties() {
 				break;
 			case YAML_SEQUENCE_START_EVENT:
 				if (strcmp(value, "elements") == 0) {
-					TraceLog(LOG_INFO, "+%s = [", value);
 					pDashboard->elements = parseDashboardElements();
 					isValue = false;
 				} else {
-					TraceLog(LOG_INFO, "ERROR - parseDashboardProperties");
-					done = true;
+					TraceLog(LOG_ERROR, "parseDashboardProperties");
 				}
 				break;
 			case YAML_MAPPING_END_EVENT:
-				TraceLog(LOG_INFO, "}");
 				done = true;
 				break;
 			default:
-				TraceLog(LOG_INFO, "ERROR - parseDashboardProperties");
+				TraceLog(LOG_ERROR, "parseDashboardProperties");
 				done = true;
 				break;
 		}
@@ -299,15 +281,12 @@ struct dashboard* parseDashboards() {
 		}
 		switch (event.type) {
 			case YAML_SEQUENCE_END_EVENT:
-				TraceLog(LOG_INFO, "]");
 				done = true;
 				break;
 			case YAML_MAPPING_START_EVENT:
-				TraceLog(LOG_INFO, "{");
 				pItem = parseDashboardProperties();
 				if (pItem == 0) {
-					TraceLog(LOG_INFO, "ERROR - parseDashboard");
-					done = true;
+					TraceLog(LOG_ERROR, "parseDashboard");
 				} else {
 					if (pPointer == 0) {
 						pList = pPointer = pItem;
@@ -319,12 +298,62 @@ struct dashboard* parseDashboards() {
 				}
 				break;
 			default:
-				TraceLog(LOG_INFO, "ERROR - parseDashboard");
-				done = true;
+				TraceLog(LOG_ERROR, "parseDashboard");
 				break;
 		}
 	}
 	return pList;
+}
+
+struct dashboard* parseProperties() {
+	struct dashboard* pDashboards;
+	bool done = false;
+	bool isValue = false;
+	char value[256];
+
+	pDashboards = 0;
+	while (!done) {
+		if (!yaml_parser_parse(&parser, &event)) {
+			break;
+		}
+		switch (event.type) {
+			case YAML_SCALAR_EVENT:
+				if (isValue) {
+					if (strcmp(value, "width") == 0) {
+						sscanf((const char*)event.data.scalar.value, "%d", &g_width);
+					} else if (strcmp(value, "height") == 0) {
+						sscanf((const char*)event.data.scalar.value, "%d", &g_height);
+					} else if (strcmp(value, "border") == 0) {
+						sscanf((const char*)event.data.scalar.value, "%d", &g_border);
+					} else {
+						TraceLog(LOG_ERROR, "parseProperties");
+					}
+					isValue = false;
+				} else {
+					strcpy(value, (char*)event.data.scalar.value);
+					isValue = true;
+				}
+				break;
+			case YAML_SEQUENCE_START_EVENT:
+				if (isValue) {
+					if (strcmp(value, "dashboards") == 0) {
+						pDashboards = parseDashboards();
+					} else {
+						TraceLog(LOG_ERROR, "parseProperties");
+					}
+				} else {
+					TraceLog(LOG_ERROR, "parseProperties");
+				}
+				break;
+			case YAML_MAPPING_END_EVENT:
+				done = true;
+				break;
+			default:
+				TraceLog(LOG_ERROR, "parseProperties");
+				break;
+		}
+	}
+	return pDashboards;
 }
 
 struct dashboard* parseDocument() {
@@ -338,16 +367,13 @@ struct dashboard* parseDocument() {
 		}
 		switch (event.type) {
 			case YAML_DOCUMENT_END_EVENT:
-				TraceLog(LOG_INFO, "YAML_DOCUMENT_END_EVENT - parseDocument");
 				done = true;
 				break;
-			case YAML_SEQUENCE_START_EVENT:
-				TraceLog(LOG_INFO, "+Dashboards = [");
-				pDashboards = parseDashboards();
+			case YAML_MAPPING_START_EVENT:
+				pDashboards = parseProperties();
 				break;
 			default:
-				TraceLog(LOG_INFO, "ERROR - parseDocument");
-				done = true;
+				TraceLog(LOG_ERROR, "parseDocument");
 				break;
 		}
 	}
@@ -365,16 +391,13 @@ struct dashboard* parseStream() {
 		}
 		switch (event.type) {
 			case YAML_STREAM_END_EVENT:
-				TraceLog(LOG_INFO, "YAML_STREAM_END_EVENT - parseStream");
 				done = true;
 				break;
 			case YAML_DOCUMENT_START_EVENT:
-				TraceLog(LOG_INFO, "YAML_DOCUMENT_START_EVENT - parseStream");
 				pDashboards = parseDocument();
 				break;
 			default:
-				TraceLog(LOG_INFO, "ERROR - parseStream");
-				done = true;
+				TraceLog(LOG_ERROR, "parseStream");
 				break;
 		}
 	}
@@ -394,16 +417,13 @@ struct dashboard* parseConfiguration(const unsigned char* buffer, int size) {
 		}
 		switch (event.type) {
 			case YAML_STREAM_START_EVENT:
-				TraceLog(LOG_INFO, "YAML_STREAM_START_EVENT - parseConfiguration");
 				pDashboards = parseStream();
 				break;
 			case YAML_NO_EVENT:
-				TraceLog(LOG_INFO, "YAML_NO_EVENT - parseConfiguration");
 				done = true;
 				break;
 			default:
-				TraceLog(LOG_INFO, "ERROR - parseConfiguration");
-				done = true;
+				TraceLog(LOG_ERROR, "parseConfiguration");
 				break;
 		}
 	}
@@ -428,7 +448,7 @@ struct dashboard* loadConfiguration(int argc, char* argv[]) {
 		free(buffer);
 	}
 	if (input == 0) {
-		input = fopen("/etc/rpi-db0.yaml", "r");
+		input = fopen("/etc/rpi-dashboard.yaml", "r");
 	}
 	if (input == 0) {
 		return 0;
