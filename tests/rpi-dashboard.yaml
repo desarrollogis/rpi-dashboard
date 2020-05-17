@@ -1,72 +1,76 @@
 ---
-- name: Clock
-  background: black
-  elements:
-    - name: Date
-      type: time
-      format: "%Y-%m-%d"
-      width: 50%
-      top: 0%
-      color: white
-    - name: Time
-      type: time
-      format: "%H:%M"
-      width: 100%
-      color: white
-- name: Weather
-  background: skyblue
-  elements:
-    - name: Icon
-      type: image
-      filename: /tmp/rpi-db0/weather/icon-200x200.png
-    - name: Date
-      type: time
-      format: "%Y-%m-%d"
-      height: 10%
-      top: 0%
-      color: black
-    - name: Temperature
-      type: file
-      height: 10%
-      position: east-north
-      color: black
-      filename: /tmp/rpi-db0/weather/temperature
-    - name: Time
-      type: time
-      format: "%H:%M:%S"
-      width: 100%
-      height: 20%
-      top: 80%
-      color: black
-- name: Gmail
-  background: white
-  elements:
-    - name: IconPersonal
-      type: image
-      height: 70%
-      top: 10%
-      filename: /tmp/rpi-db0/gmail/Gmail_Icon.png
-    - name: Date
-      type: time
-      format: "%Y-%m-%d"
-      height: 10%
-      top: 0%
-      color: black
-    - name: Count
-      type: file
-      height: 10%
-      position: east-north
-      color: black
-      filename: /tmp/rpi-db0/gmail/count
-    - name: Email
-      type: paragraph
-      filename: /tmp/rpi-db0/gmail/email
-      height: 70%
-      top: 10%
-    - name: Time
-      type: time
-      format: "%H:%M:%S"
-      width: 100%
-      height: 20%
-      top: 80%
-      color: black
+width: 800
+height: 600
+border: 50
+dashboards:
+  - name: Clock
+    background: black
+    elements:
+      - name: Date
+        type: time
+        format: "%Y-%m-%d"
+        width: 50%
+        top: 0%
+        color: white
+      - name: Time
+        type: time
+        format: "%H:%M"
+        width: 100%
+        color: white
+  - name: Weather
+    background: skyblue
+    elements:
+      - name: Icon
+        type: image
+        filename: /tmp/rpi-db0/weather/icon-200x200.png
+      - name: Date
+        type: time
+        format: "%Y-%m-%d"
+        height: 10%
+        top: 0%
+        color: black
+      - name: Temperature
+        type: file
+        height: 10%
+        position: east-north
+        color: black
+        filename: /tmp/rpi-db0/weather/temperature
+      - name: Time
+        type: time
+        format: "%H:%M:%S"
+        width: 100%
+        height: 20%
+        top: 80%
+        color: black
+  - name: Gmail
+    background: white
+    elements:
+      - name: IconPersonal
+        type: image
+        height: 70%
+        top: 10%
+        filename: /tmp/rpi-db0/gmail/Gmail_Icon.png
+      - name: Date
+        type: time
+        format: "%Y-%m-%d"
+        height: 10%
+        top: 0%
+        color: black
+      - name: Count
+        type: file
+        height: 10%
+        position: east-north
+        color: black
+        filename: /tmp/rpi-db0/gmail/count
+      - name: Email
+        type: paragraph
+        filename: /tmp/rpi-db0/gmail/email
+        height: 70%
+        top: 10%
+      - name: Time
+        type: time
+        format: "%H:%M:%S"
+        width: 100%
+        height: 20%
+        top: 80%
+        color: black
