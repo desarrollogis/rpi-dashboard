@@ -9,13 +9,14 @@ dashboards:
       - name: Date
         type: time
         format: "%Y-%m-%d"
-        width: 50%
-        top: 0%
+        hsize: 50%
+        vposition: 0%
         color: white
       - name: Time
         type: time
         format: "%H:%M"
-        width: 100%
+        hsize: 100%
+        vposition: Date.bottom
         color: white
   - name: Weather
     background: skyblue
@@ -38,7 +39,7 @@ dashboards:
       - name: Time
         type: time
         format: "%H:%M:%S"
-        width: 100%
+        hsize: 100%
         height: 20%
         top: 80%
         color: black
@@ -70,7 +71,7 @@ dashboards:
       - name: Time
         type: time
         format: "%H:%M:%S"
-        width: 100%
+        hsize: 100%
         height: 20%
         top: 80%
         color: black

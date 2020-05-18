@@ -2,7 +2,14 @@
 #include <regex.h>
 #include "configuration.h"
 
+#define DEBUG_SETCACHEPROPERTY
+#define DEBUG_GETPOSITION
+
 void setCacheProperty(const char* objectName, const char* objectProperty, const long value) {
+#ifdef DEBUG_SETCACHEPROPERTY
+	TraceLog(LOG_INFO, "setCacheProperty(\"%s\", \"%s\", %ld)", objectName, objectProperty, value);
+#endif
+
 	ENTRY item;
 	char *buffer = 0;
 
@@ -14,7 +21,9 @@ void setCacheProperty(const char* objectName, const char* objectProperty, const 
 	item.key = buffer;
 	item.data = (void*)value;
 	hsearch(item, ENTER);
-	TraceLog(LOG_INFO, "setCacheProperty: %s.%s = %ld", objectName, objectProperty, value);
+#ifdef DEBUG_SETCACHEPROPERTY
+	TraceLog(LOG_INFO, "}//setCacheProperty");
+#endif
 }
 
 bool getCacheProperty(char* object, long* pValue) {
@@ -114,9 +123,11 @@ void getPosition(struct dashboard_element* pElement, long* pLeft, long* pTop) {
 	if (pElement == 0) {
 		return;
 	}
-	//TraceLog(LOG_INFO, "getPosition(\"%s\"){", pElement->name);
+#ifdef DEBUG_GETPOSITION
+	TraceLog(LOG_INFO, "getPosition(\"%s\"){", pElement->name);
+#endif
 	if (getCacheProperty(pElement->hposition, pLeft)) {
-		if (strcmp(pElement->hplacement, "left") == 0) {
+		if ((pElement->hplacement != 0) && (strcmp(pElement->hplacement, "left") == 0)) {
 			long width = 0;
 
 			if (getCachePropertyFromObject(pElement->name, "width", &width)) {
@@ -135,7 +146,7 @@ void getPosition(struct dashboard_element* pElement, long* pLeft, long* pTop) {
 		if (getCacheProperty("screen.left", &left)) {
 			*pLeft += left;
 		}
-		if (strcmp(pElement->hplacement, "left") == 0) {
+		if ((pElement->hplacement != 0) && (strcmp(pElement->hplacement, "left") == 0)) {
 			TraceLog(LOG_ERROR, "getPosition 1a");
 		} else {
 		}
@@ -144,7 +155,7 @@ void getPosition(struct dashboard_element* pElement, long* pLeft, long* pTop) {
 		}
 	}
 	if (getCacheProperty(pElement->vposition, pTop)) {
-		if (strcmp(pElement->vplacement, "top") == 0) {
+		if ((pElement->vplacement != 0) && (strcmp(pElement->vplacement, "top")) == 0) {
 			long height = 0;
 
 			if (getCachePropertyFromObject(pElement->name, "height", &height)) {
@@ -158,5 +169,7 @@ void getPosition(struct dashboard_element* pElement, long* pLeft, long* pTop) {
 	}
 	setCacheProperty(pElement->name, "left", *pLeft);
 	setCacheProperty(pElement->name, "top", *pTop);
-	//TraceLog(LOG_INFO, "}//getPosition");
+#ifdef DEBUG_GETPOSITION
+	TraceLog(LOG_INFO, "}//getPosition");
+#endif
 }
