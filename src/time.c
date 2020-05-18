@@ -37,6 +37,8 @@ void drawElementTime(struct dashboard_element* pElement) {
 	setCacheProperty(pElement->name, "width", hsize);
 	setCacheProperty(pElement->name, "height", vsize);
 	getPosition(pElement, &left, &top);
+	setCacheProperty(pElement->name, "right", left + hsize);
+	setCacheProperty(pElement->name, "bottom", top + vsize);
 	while ((vsize > 0) && (MeasureText(buffer, vsize) > hsize)) {
 		--vsize;
 	}

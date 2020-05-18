@@ -18,9 +18,9 @@ void setCacheProperty(const char* objectName, const char* objectProperty, const 
 }
 
 bool getCacheProperty(char* object, long* pValue) {
-	TraceLog(LOG_INFO, "getCacheProperty(\"%s\"){", object);
+	//TraceLog(LOG_INFO, "getCacheProperty(\"%s\"){", object);
 	if (object == 0) {
-		TraceLog(LOG_INFO, "}//getCacheProperty");
+		//TraceLog(LOG_INFO, "}//getCacheProperty");
 		return false;
 	}
 
@@ -30,12 +30,12 @@ bool getCacheProperty(char* object, long* pValue) {
 	item.key = object;
 	pPointer = hsearch(item, FIND);
 	if (pPointer == 0) {
-		TraceLog(LOG_INFO, "}//getCacheProperty");
+		//TraceLog(LOG_INFO, "}//getCacheProperty");
 		return false;
 	} else {
 		*pValue = (long)pPointer->data;
 	}
-	TraceLog(LOG_INFO, "}//getCacheProperty");
+	//TraceLog(LOG_INFO, "}//getCacheProperty");
 	return true;
 }
 
@@ -50,9 +50,9 @@ bool getCachePropertyFromObject(const char* objectName, const char* objectProper
 }
 
 bool getPercent(char* value, long* pResult) {
-	TraceLog(LOG_INFO, "getPercent(\"%s\"){", value);
+	//TraceLog(LOG_INFO, "getPercent(\"%s\"){", value);
 	if (value == 0) {
-		TraceLog(LOG_INFO, "}//getPercent");
+		//TraceLog(LOG_INFO, "}//getPercent");
 		return false;
 	}
 
@@ -74,7 +74,7 @@ bool getPercent(char* value, long* pResult) {
 		}
 	}
 	regfree(&regex);
-	TraceLog(LOG_INFO, "}//getPercent");
+	//TraceLog(LOG_INFO, "}//getPercent");
 	return found;
 }
 
@@ -114,7 +114,7 @@ void getPosition(struct dashboard_element* pElement, long* pLeft, long* pTop) {
 	if (pElement == 0) {
 		return;
 	}
-	TraceLog(LOG_INFO, "getPosition(\"%s\"){", pElement->name);
+	//TraceLog(LOG_INFO, "getPosition(\"%s\"){", pElement->name);
 	if (getCacheProperty(pElement->hposition, pLeft)) {
 		if (strcmp(pElement->hplacement, "left") == 0) {
 			long width = 0;
@@ -151,7 +151,6 @@ void getPosition(struct dashboard_element* pElement, long* pLeft, long* pTop) {
 				*pTop -= height;
 			}
 		} else {
-			TraceLog(LOG_ERROR, "getPosition 1a");
 		}
 	} else {
 		if (getCacheProperty("screen.top", pTop)) {
@@ -159,5 +158,5 @@ void getPosition(struct dashboard_element* pElement, long* pLeft, long* pTop) {
 	}
 	setCacheProperty(pElement->name, "left", *pLeft);
 	setCacheProperty(pElement->name, "top", *pTop);
-	TraceLog(LOG_INFO, "}//getPosition");
+	//TraceLog(LOG_INFO, "}//getPosition");
 }
