@@ -127,15 +127,6 @@ void getPosition(struct dashboard_element* pElement, long* pLeft, long* pTop) {
 	TraceLog(LOG_INFO, "getPosition(\"%s\"){", pElement->name);
 #endif
 	if (getCacheProperty(pElement->hposition, pLeft)) {
-		if ((pElement->hplacement != 0) && (strcmp(pElement->hplacement, "left") == 0)) {
-			long width = 0;
-
-			if (getCachePropertyFromObject(pElement->name, "width", &width)) {
-				*pLeft -= width;
-			}
-		} else {
-			TraceLog(LOG_ERROR, "getPosition 1");
-		}
 	} else if (getPercent(pElement->hposition, pLeft)) {
 		long width = 0;
 		long left = 0;
@@ -146,12 +137,21 @@ void getPosition(struct dashboard_element* pElement, long* pLeft, long* pTop) {
 		if (getCacheProperty("screen.left", &left)) {
 			*pLeft += left;
 		}
-		if ((pElement->hplacement != 0) && (strcmp(pElement->hplacement, "left") == 0)) {
-			TraceLog(LOG_ERROR, "getPosition 1a");
-		} else {
-		}
 	} else {
 		if (getCacheProperty("screen.left", pLeft)) {
+		}
+	}
+	if ((pElement->hplacement != 0) && (strcmp(pElement->hplacement, "left") == 0)) {
+		long width = 0;
+
+		if (getCachePropertyFromObject(pElement->name, "width", &width)) {
+			*pLeft -= width;
+		}
+	} else if ((pElement->hplacement != 0) && (strcmp(pElement->hplacement, "center") == 0)) {
+		long width = 0;
+
+		if (getCachePropertyFromObject(pElement->name, "width", &width)) {
+			*pLeft += width / 4;
 		}
 	}
 	if (getCacheProperty(pElement->vposition, pTop)) {
@@ -161,6 +161,20 @@ void getPosition(struct dashboard_element* pElement, long* pLeft, long* pTop) {
 			if (getCachePropertyFromObject(pElement->name, "height", &height)) {
 				*pTop -= height;
 			}
+		} else {
+		}
+	} else if (getPercent(pElement->vposition, pTop)) {
+		long height = 0;
+		long top = 0;
+
+		if (getCacheProperty("screen.height", &height)) {
+			*pTop *= height / 100;
+		}
+		if (getCacheProperty("screen.top", &top)) {
+			*pTop += top;
+		}
+		if ((pElement->vplacement != 0) && (strcmp(pElement->vplacement, "top") == 0)) {
+			TraceLog(LOG_ERROR, "getPosition 3");
 		} else {
 		}
 	} else {

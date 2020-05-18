@@ -31,7 +31,8 @@ void drawElementTime(struct dashboard_element* pElement) {
 				++vsize;
 			}
 		} else {
-			TraceLog(LOG_ERROR, "drawElementTime 3");
+			hsize = getHSize(pElement);
+			vsize = getVSize(pElement);
 		}
 	}
 	setCacheProperty(pElement->name, "width", hsize);
