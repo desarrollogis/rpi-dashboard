@@ -8,6 +8,15 @@ void printElements(struct dashboard_element* pElements) {
 		printf("\t\t\t\t{\n");
 		printf("\t\t\t\t\tname: \"%s\",\n", pPointer->name);
 		printf("\t\t\t\t\ttype: \"%s\",\n", pPointer->type);
+		printf("\t\t\t\t\thsize: \"%s\",\n", pPointer->hsize);
+		printf("\t\t\t\t\thposition: \"%s\",\n", pPointer->hposition);
+		printf("\t\t\t\t\thplacement: \"%s\",\n", pPointer->hplacement);
+		printf("\t\t\t\t\tvsize: \"%s\",\n", pPointer->vsize);
+		printf("\t\t\t\t\tvposition: \"%s\",\n", pPointer->vposition);
+		printf("\t\t\t\t\tvplacement: \"%s\",\n", pPointer->vplacement);
+		printf("\t\t\t\t\ttype: \"%s\",\n", pPointer->type);
+		printf("\t\t\t\t\ttype: \"%s\",\n", pPointer->type);
+		printf("\t\t\t\t\ttype: \"%s\",\n", pPointer->type);
 		printf("\t\t\t\t}%c\n", (pPointer->next == 0) ? '\0' : ',');
 		pPointer = pPointer->next;
 	}
@@ -23,9 +32,9 @@ int main(int argc, char* argv[]) {
 	struct dashboard* pPointer = pDashboards;
 
 	printf("{\n");
-	printf("\twidth: %d,\n", g_width);
-	printf("\theight: %d,\n", g_height);
-	printf("\tborder: %d,\n", g_border);
+	printf("\twidth: %ld,\n", g_width);
+	printf("\theight: %ld,\n", g_height);
+	printf("\tborder: %ld,\n", g_border);
 	printf("\tdashboards: [\n");
 	do {
 		printf("\t\t{\n");

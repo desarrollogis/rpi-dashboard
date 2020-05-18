@@ -3,12 +3,12 @@
 #include <yaml.h>
 #include "raylib.h"
 
-extern int g_width;
-extern int g_height;
-extern int g_border;
+extern long g_width;
+extern long g_height;
+extern long g_border;
 
 struct dashboard_element {
-	yaml_char_t* name;
+	char* name;
 	yaml_char_t* type;
 	//time type
 	char* format;
@@ -17,18 +17,13 @@ struct dashboard_element {
 	time_t modification;
 	//image type
 	Texture2D texture;
-	int left_absolute;
-	int top_absolute;
 	//image type
-	yaml_char_t* width;
-	yaml_char_t* width_unit;
-	yaml_char_t* height;
-	yaml_char_t* height_unit;
-	yaml_char_t* left;
-	yaml_char_t* left_unit;
-	yaml_char_t* top;
-	yaml_char_t* top_unit;
-	yaml_char_t* position;
+	char* hsize;
+	char* hposition;
+	char* hplacement;
+	char* vsize;
+	char* vposition;
+	char* vplacement;
 	Color color;
 	struct dashboard_element* next;
 };

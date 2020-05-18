@@ -4,75 +4,11 @@
 #include "raylib.h"
 #include "configuration.h"
 
-int g_width = 800;
-int g_height = 600;
-int g_border = 50;
+long g_width = 800;
+long g_height = 600;
+long g_border = 50;
 yaml_parser_t parser;
 yaml_event_t event;
-
-void getWidth(yaml_char_t* value, struct dashboard_element* pElement) {
-	regex_t regex;
-
-	if (!regcomp(&regex, "^([[:alnum:]]*)%$", REG_EXTENDED)) {
-		regmatch_t groups[2];
-
-		if (!regexec(&regex, (char*)value, 2, groups, 0)) {
-			if (groups[1].rm_so != (size_t)(-1)) {
-				pElement->width = (yaml_char_t*)strndup((char*)&value[groups[1].rm_so], groups[1].rm_eo - groups[1].rm_so);
-				pElement->width_unit = (yaml_char_t*)strdup("percent");
-			}
-		}
-		regfree(&regex);
-	}
-}
-
-void getHeight(yaml_char_t* value, struct dashboard_element* pElement) {
-	regex_t regex;
-
-	if (!regcomp(&regex, "^([[:alnum:]]*)%$", REG_EXTENDED)) {
-		regmatch_t groups[2];
-
-		if (!regexec(&regex, (char*)value, 2, groups, 0)) {
-			if (groups[1].rm_so != (size_t)(-1)) {
-				pElement->height = (yaml_char_t*)strndup((char*)&value[groups[1].rm_so], groups[1].rm_eo - groups[1].rm_so);
-				pElement->height_unit = (yaml_char_t*)strdup("percent");
-			}
-		}
-		regfree(&regex);
-	}
-}
-
-void getLeft(yaml_char_t* value, struct dashboard_element* pElement) {
-	regex_t regex;
-
-	if (!regcomp(&regex, "^([[:alnum:]]*)%$", REG_EXTENDED)) {
-		regmatch_t groups[2];
-
-		if (!regexec(&regex, (char*)value, 2, groups, 0)) {
-			if (groups[1].rm_so != (size_t)(-1)) {
-				pElement->left = (yaml_char_t*)strndup((char*)&value[groups[1].rm_so], groups[1].rm_eo - groups[1].rm_so);
-				pElement->left_unit = (yaml_char_t*)strdup("percent");
-			}
-		}
-		regfree(&regex);
-	}
-}
-
-void getTop(yaml_char_t* value, struct dashboard_element* pElement) {
-	regex_t regex;
-
-	if (!regcomp(&regex, "^([[:alnum:]]*)%$", REG_EXTENDED)) {
-		regmatch_t groups[2];
-
-		if (!regexec(&regex, (char*)value, 2, groups, 0)) {
-			if (groups[1].rm_so != (size_t)(-1)) {
-				pElement->top = (yaml_char_t*)strndup((char*)&value[groups[1].rm_so], groups[1].rm_eo - groups[1].rm_so);
-				pElement->top_unit = (yaml_char_t*)strdup("percent");
-			}
-		}
-		regfree(&regex);
-	}
-}
 
 void getElementColor(yaml_char_t* value, struct dashboard_element* pElement) {
 	if (strcmp((char*)value, "skyblue") == 0) {
@@ -98,17 +34,12 @@ struct dashboard_element* parseDashboardElementsProperties() {
 	pElement->filename = 0;
 	pElement->modification = 0;
 	//pElement->texture = 0;
-	pElement->left_absolute = 0;
-	pElement->top_absolute = 0;
-	pElement->width = 0;
-	pElement->width_unit = 0;
-	pElement->height = 0;
-	pElement->height_unit = 0;
-	pElement->left = 0;
-	pElement->left_unit = 0;
-	pElement->top = 0;
-	pElement->top_unit = 0;
-	pElement->position = 0;
+	pElement->hsize = 0;
+	pElement->hposition = 0;
+	pElement->hplacement = 0;
+	pElement->vsize = 0;
+	pElement->vposition = 0;
+	pElement->vplacement = 0;
 	pElement->color = BLACK;
 	pElement->next = 0;
 
@@ -124,21 +55,23 @@ struct dashboard_element* parseDashboardElementsProperties() {
 			case YAML_SCALAR_EVENT:
 				if (isValue) {
 					if (strcmp(value, "name") == 0) {
-						pElement->name = (yaml_char_t *)strdup((char *)event.data.scalar.value);
+						pElement->name = strdup((char *)event.data.scalar.value);
 					} else if (strcmp(value, "type") == 0) {
 						pElement->type = (yaml_char_t *)strdup((char *)event.data.scalar.value);
 					} else if (strcmp(value, "format") == 0) {
 						pElement->format = strdup((char *)event.data.scalar.value);
-					} else if (strcmp(value, "width") == 0) {
-						getWidth(event.data.scalar.value, pElement);
-					} else if (strcmp(value, "height") == 0) {
-						getHeight(event.data.scalar.value, pElement);
-					} else if (strcmp(value, "left") == 0) {
-						getLeft(event.data.scalar.value, pElement);
-					} else if (strcmp(value, "top") == 0) {
-						getTop(event.data.scalar.value, pElement);
-					} else if (strcmp(value, "position") == 0) {
-						pElement->position = (yaml_char_t *)strdup((char *)event.data.scalar.value);
+					} else if (strcmp(value, "hsize") == 0) {
+						pElement->hsize = strdup((char*)event.data.scalar.value);
+					} else if (strcmp(value, "hposition") == 0) {
+						pElement->hposition = strdup((char*)event.data.scalar.value);
+					} else if (strcmp(value, "hplacement") == 0) {
+						pElement->hplacement = strdup((char*)event.data.scalar.value);
+					} else if (strcmp(value, "vsize") == 0) {
+						pElement->vsize = strdup((char*)event.data.scalar.value);
+					} else if (strcmp(value, "vposition") == 0) {
+						pElement->vposition = strdup((char*)event.data.scalar.value);
+					} else if (strcmp(value, "vplacement") == 0) {
+						pElement->vplacement = strdup((char*)event.data.scalar.value);
 					} else if (strcmp(value, "color") == 0) {
 						getElementColor(event.data.scalar.value, pElement);
 					} else if (strcmp(value, "filename") == 0) {
@@ -320,11 +253,11 @@ struct dashboard* parseProperties() {
 			case YAML_SCALAR_EVENT:
 				if (isValue) {
 					if (strcmp(value, "width") == 0) {
-						sscanf((const char*)event.data.scalar.value, "%d", &g_width);
+						sscanf((const char*)event.data.scalar.value, "%ld", &g_width);
 					} else if (strcmp(value, "height") == 0) {
-						sscanf((const char*)event.data.scalar.value, "%d", &g_height);
+						sscanf((const char*)event.data.scalar.value, "%ld", &g_height);
 					} else if (strcmp(value, "border") == 0) {
-						sscanf((const char*)event.data.scalar.value, "%d", &g_border);
+						sscanf((const char*)event.data.scalar.value, "%ld", &g_border);
 					} else {
 						TraceLog(LOG_ERROR, "parseProperties");
 					}
