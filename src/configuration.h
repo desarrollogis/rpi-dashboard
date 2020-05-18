@@ -13,7 +13,7 @@ struct dashboard_element {
 	//time type
 	char* format;
 	//file type
-	yaml_char_t* filename;
+	char* filename;
 	time_t modification;
 	//image type
 	Texture2D texture;

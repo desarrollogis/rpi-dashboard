@@ -75,7 +75,7 @@ struct dashboard_element* parseDashboardElementsProperties() {
 					} else if (strcmp(value, "color") == 0) {
 						getElementColor(event.data.scalar.value, pElement);
 					} else if (strcmp(value, "filename") == 0) {
-						pElement->filename = (yaml_char_t *)strdup((char *)event.data.scalar.value);
+						pElement->filename = strdup((char *)event.data.scalar.value);
 					} else {
 						TraceLog(LOG_ERROR, "parseDashboardElementsProperties");
 					}

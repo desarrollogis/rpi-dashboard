@@ -1,6 +1,7 @@
 #include <search.h>
 #include "drawing.h"
 #include "time.h"
+#include "file.h"
 
 void drawElement(struct dashboard_element* pElement) {
 	if (pElement == 0) {
@@ -9,7 +10,7 @@ void drawElement(struct dashboard_element* pElement) {
 	if (strcmp((char*)pElement->type, "time") == 0) {
 		drawElementTime(pElement);
 	} else if (strcmp((char*)pElement->type, "file") == 0) {
-		//drawElementFile(pElement);
+		drawElementFile(pElement);
 	} else if (strcmp((char*)pElement->type, "image") == 0) {
 		//drawElementImage(pElement);
 	} else if (strcmp((char*)pElement->type, "paragraph") == 0) {
