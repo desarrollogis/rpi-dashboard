@@ -27,8 +27,8 @@ dashboards:
       - name: Date
         type: time
         format: "%Y-%m-%d"
-        height: 10%
-        top: 0%
+        vsize: 10%
+        vposition: 0%
         color: black
       - name: Temperature
         type: file
@@ -40,8 +40,9 @@ dashboards:
         type: time
         format: "%H:%M:%S"
         hsize: 100%
-        height: 20%
-        top: 80%
+        hplacement: center
+        vsize: 20%
+        vposition: 80%
         color: black
   - name: Gmail
     background: white
