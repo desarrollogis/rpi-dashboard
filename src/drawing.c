@@ -2,18 +2,19 @@
 #include "drawing.h"
 #include "time.h"
 #include "file.h"
+#include "image.h"
 
 void drawElement(struct dashboard_element* pElement) {
 	if (pElement == 0) {
 		return;
 	}
-	if (strcmp((char*)pElement->type, "time") == 0) {
+	if (strcmp(pElement->type, "time") == 0) {
 		drawElementTime(pElement);
-	} else if (strcmp((char*)pElement->type, "file") == 0) {
+	} else if (strcmp(pElement->type, "file") == 0) {
 		drawElementFile(pElement);
-	} else if (strcmp((char*)pElement->type, "image") == 0) {
-		//drawElementImage(pElement);
-	} else if (strcmp((char*)pElement->type, "paragraph") == 0) {
+	} else if (strcmp(pElement->type, "image") == 0) {
+		drawElementImage(pElement);
+	} else if (strcmp(pElement->type, "paragraph") == 0) {
 		//drawElementParagraph(pElement);
 	}
 	drawElement(pElement->next);

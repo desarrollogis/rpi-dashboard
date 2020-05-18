@@ -9,7 +9,7 @@ extern long g_border;
 
 struct dashboard_element {
 	char* name;
-	yaml_char_t* type;
+	char* type;
 	//time type
 	char* format;
 	//file type

@@ -57,7 +57,7 @@ struct dashboard_element* parseDashboardElementsProperties() {
 					if (strcmp(value, "name") == 0) {
 						pElement->name = strdup((char *)event.data.scalar.value);
 					} else if (strcmp(value, "type") == 0) {
-						pElement->type = (yaml_char_t *)strdup((char *)event.data.scalar.value);
+						pElement->type = strdup((char *)event.data.scalar.value);
 					} else if (strcmp(value, "format") == 0) {
 						pElement->format = strdup((char *)event.data.scalar.value);
 					} else if (strcmp(value, "hsize") == 0) {

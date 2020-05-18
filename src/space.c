@@ -97,6 +97,7 @@ long getVSize(struct dashboard_element* pElement) {
 		if (getCacheProperty("screen.height", &height)) {
 			size = size * height / 100;
 		}
+	} else if (getCacheProperty("screen.height", &size)) {
 	} else {
 		TraceLog(LOG_ERROR, "getVSize");
 	}
@@ -113,6 +114,7 @@ long getHSize(struct dashboard_element* pElement) {
 		if (getCacheProperty("screen.width", &width)) {
 			size = size * width / 100;
 		}
+	} else if (getCacheProperty("screen.width", &size)) {
 	} else {
 		TraceLog(LOG_ERROR, "getHSize");
 	}
