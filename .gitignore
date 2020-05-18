@@ -53,3 +53,4 @@ dkms.conf
 apps/minimal
 tests/test_configuration
 .e
+tests/test_drawing
