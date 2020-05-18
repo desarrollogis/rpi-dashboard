@@ -11,7 +11,7 @@ struct dashboard_element {
 	yaml_char_t* name;
 	yaml_char_t* type;
 	//time type
-	yaml_char_t* format;
+	char* format;
 	//file type
 	yaml_char_t* filename;
 	time_t modification;

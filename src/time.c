@@ -7,6 +7,7 @@ void drawElementTime(struct dashboard_element* pElement) {
 		return;
 	}
 	if (pElement->format == 0) {
+		pElement->format = strdup("%H:%M");
 		return;
 	}
 
@@ -18,7 +19,7 @@ void drawElementTime(struct dashboard_element* pElement) {
 	int width = g_width - g_border * 2;
 	int height = g_height - g_border * 2;
 
-	strftime(buffer, 256, (char *)pElement->format, ts);
+	strftime(buffer, 256, pElement->format, ts);
 	if (pElement->width != 0) {
 		if (strcmp((char*)pElement->width_unit, "percent") == 0) {
 			sscanf((char*)pElement->width, "%d", &width);
@@ -50,5 +51,5 @@ void drawElementTime(struct dashboard_element* pElement) {
 		width = MeasureText(buffer, height);
 	}
 	DrawText(buffer, left + width / 2 - MeasureText(buffer, height) / 2, top, height, pElement->color);
-	g_lastTop = top + height;
+	//g_lastTop = top + height;
 }

@@ -128,7 +128,7 @@ struct dashboard_element* parseDashboardElementsProperties() {
 					} else if (strcmp(value, "type") == 0) {
 						pElement->type = (yaml_char_t *)strdup((char *)event.data.scalar.value);
 					} else if (strcmp(value, "format") == 0) {
-						pElement->format = (yaml_char_t *)strdup((char *)event.data.scalar.value);
+						pElement->format = strdup((char *)event.data.scalar.value);
 					} else if (strcmp(value, "width") == 0) {
 						getWidth(event.data.scalar.value, pElement);
 					} else if (strcmp(value, "height") == 0) {
@@ -239,7 +239,7 @@ struct dashboard* parseDashboardProperties() {
 					} else if (strcmp(value, "background") == 0) {
 						getDashboardBackground(event.data.scalar.value, pDashboard);
 					} else {
-						TraceLog(LOG_ERROR, "parseDashboardProperties");
+						TraceLog(LOG_ERROR, "parseDashboardProperties: %s", (char*)event.data.scalar.value);
 					}
 					isValue = false;
 				} else {
@@ -252,14 +252,14 @@ struct dashboard* parseDashboardProperties() {
 					pDashboard->elements = parseDashboardElements();
 					isValue = false;
 				} else {
-					TraceLog(LOG_ERROR, "parseDashboardProperties");
+					TraceLog(LOG_ERROR, "parseDashboardProperties 2");
 				}
 				break;
 			case YAML_MAPPING_END_EVENT:
 				done = true;
 				break;
 			default:
-				TraceLog(LOG_ERROR, "parseDashboardProperties");
+				TraceLog(LOG_ERROR, "parseDashboardProperties 3");
 				done = true;
 				break;
 		}
