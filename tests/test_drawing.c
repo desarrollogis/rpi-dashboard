@@ -17,6 +17,9 @@ int main(int argc, char* argv[]) {
 		BeginDrawing();
 		drawDashboard(pPointer);
 		EndDrawing();
+		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+			pPointer = pPointer->next;
+		}
 	}
 	CloseWindow();
 	return 0;

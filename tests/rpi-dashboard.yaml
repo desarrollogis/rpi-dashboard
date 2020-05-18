@@ -32,8 +32,9 @@ dashboards:
         color: black
       - name: Temperature
         type: file
-        height: 10%
-        position: east-north
+        vsize: 10%
+        hposition: screen.right
+        hplacement: left
         color: black
         filename: /tmp/rpi-db0/weather/temperature
       - name: Time
@@ -49,30 +50,31 @@ dashboards:
     elements:
       - name: IconPersonal
         type: image
-        height: 70%
-        top: 10%
+        vsize: 70%
+        vposition: 10%
         filename: /tmp/rpi-db0/gmail/Gmail_Icon.png
       - name: Date
         type: time
         format: "%Y-%m-%d"
-        height: 10%
-        top: 0%
+        vsize: 10%
         color: black
       - name: Count
         type: file
-        height: 10%
-        position: east-north
+        hposition: screen.right
+        hplacement: left
+        vsize: 10%
         color: black
         filename: /tmp/rpi-db0/gmail/count
       - name: Email
         type: paragraph
         filename: /tmp/rpi-db0/gmail/email
-        height: 70%
-        top: 10%
+        vposition: 10%
+        vsize: 70%
       - name: Time
         type: time
         format: "%H:%M:%S"
         hsize: 100%
-        height: 20%
-        top: 80%
+        hplacement: center
+        vsize: 20%
+        vposition: 80%
         color: black
