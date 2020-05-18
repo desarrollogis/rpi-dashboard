@@ -21,7 +21,6 @@ void drawElementImage(struct dashboard_element* pElement) {
 		return;
 	}
 
-	Image icon = LoadImage(pElement->filename);
 	long width = getHSize(pElement);
 	long height = getVSize(pElement);
 	long left = 0;
@@ -32,6 +31,21 @@ void drawElementImage(struct dashboard_element* pElement) {
 	getPosition(pElement, &left, &top);
 	setCacheProperty(pElement->name, "right", left + width);
 	setCacheProperty(pElement->name, "bottom", top + height);
+
+	struct stat result;
+
+	if (stat(pElement->filename, &result) == 0) {
+		if (result.st_mtime == pElement->modification) {
+			left = left + width / 2 - pElement->texture.width / 2;
+			top = top + height / 2 - pElement->texture.height / 2;
+			DrawTexture(pElement->texture, left, top, WHITE);
+			return;
+		}
+		pElement->modification = result.st_mtime;
+	}
+
+	Image icon = LoadImage(pElement->filename);
+
 	adjustImage(width, height, &icon);
 	pElement->texture = LoadTextureFromImage(icon);
 	UnloadImage(icon);
