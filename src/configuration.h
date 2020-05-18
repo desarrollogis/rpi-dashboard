@@ -3,6 +3,10 @@
 #include <yaml.h>
 #include "raylib.h"
 
+extern int g_width;
+extern int g_height;
+extern int g_border;
+
 struct dashboard_element {
 	yaml_char_t* name;
 	yaml_char_t* type;

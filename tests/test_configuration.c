@@ -1,13 +1,6 @@
 #include "raylib.h"
 #include "../src/configuration.h"
 
-const int g_screenWidth = 0;
-const int g_screenHeight = 0;
-
-extern int g_width;
-extern int g_height;
-extern int g_border;
-
 void printElements(struct dashboard_element* pElements) {
 	struct dashboard_element* pPointer = pElements;
 
