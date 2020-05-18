@@ -2,8 +2,8 @@
 #include <regex.h>
 #include "configuration.h"
 
-#define DEBUG_SETCACHEPROPERTY
-#define DEBUG_GETPOSITION
+//#define DEBUG_SETCACHEPROPERTY
+//#define DEBUG_GETPOSITION
 
 void setCacheProperty(const char* objectName, const char* objectProperty, const long value) {
 #ifdef DEBUG_SETCACHEPROPERTY

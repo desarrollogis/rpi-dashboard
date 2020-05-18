@@ -1,6 +1,6 @@
 #include "space.h"
 
-#define DEBUG_DRAWELEMENTFILE
+//#define DEBUG_DRAWELEMENTFILE
 
 void drawElementFile(struct dashboard_element* pElement) {
 #ifdef DEBUG_DRAWELEMENTFILE
