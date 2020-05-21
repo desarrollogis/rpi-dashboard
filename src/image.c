@@ -47,6 +47,7 @@ void drawElementImage(struct dashboard_element* pElement) {
 	Image icon = LoadImage(pElement->filename);
 
 	adjustImage(width, height, &icon);
+	UnloadTexture(pElement->texture);
 	pElement->texture = LoadTextureFromImage(icon);
 	UnloadImage(icon);
 	left = left + width / 2 - pElement->texture.width / 2;
