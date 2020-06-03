@@ -8,14 +8,12 @@ void drawElement(struct dashboard_element* pElement) {
 	if (pElement == 0) {
 		return;
 	}
-	if (strcmp(pElement->type, "time") == 0) {
-		drawElementTime(pElement);
-	} else if (strcmp(pElement->type, "file") == 0) {
+	if (pElement->file != 0) {
 		drawElementFile(pElement);
-	} else if (strcmp(pElement->type, "image") == 0) {
+	} else if (pElement->image != 0) {
 		drawElementImage(pElement);
-	} else if (strcmp(pElement->type, "paragraph") == 0) {
-		//drawElementParagraph(pElement);
+	} else if (pElement->time != 0) {
+		drawElementTime(pElement);
 	}
 	drawElement(pElement->next);
 }

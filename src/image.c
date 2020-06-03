@@ -38,22 +38,22 @@ void drawElementImage(struct dashboard_element* pElement) {
 	struct stat result;
 
 	if (stat(pElement->image->filename, &result) == 0) {
-		if (result.st_mtime == pElement->modification) {
-			left = left + width / 2 - pElement->texture.width / 2;
-			top = top + height / 2 - pElement->texture.height / 2;
-			DrawTexture(pElement->texture, left, top, WHITE);
+		if (result.st_mtime == pElement->image->modification) {
+			left = left + width / 2 - pElement->image->texture.width / 2;
+			top = top + height / 2 - pElement->image->texture.height / 2;
+			DrawTexture(pElement->image->texture, left, top, WHITE);
 			return;
 		}
-		pElement->modification = result.st_mtime;
+		pElement->image->modification = result.st_mtime;
 	}
 
 	Image icon = LoadImage(pElement->image->filename);
 
 	adjustImage(width, height, &icon);
-	UnloadTexture(pElement->texture);
-	pElement->texture = LoadTextureFromImage(icon);
+	UnloadTexture(pElement->image->texture);
+	pElement->image->texture = LoadTextureFromImage(icon);
 	UnloadImage(icon);
-	left = left + width / 2 - pElement->texture.width / 2;
-	top = top + height / 2 - pElement->texture.height / 2;
-	DrawTexture(pElement->texture, left, top, WHITE);
+	left = left + width / 2 - pElement->image->texture.width / 2;
+	top = top + height / 2 - pElement->image->texture.height / 2;
+	DrawTexture(pElement->image->texture, left, top, WHITE);
 }

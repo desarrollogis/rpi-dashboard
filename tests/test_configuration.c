@@ -1,12 +1,30 @@
 #include "raylib.h"
 #include "../src/configuration.h"
 
+void printFile(struct dashboard_element_file* pPointer) {
+	if (pPointer == 0) {
+		return;
+	}
+	printf("\t\t\t\t\tfile: {\n");
+	printf("\t\t\t\t\t\tfilename: \"%s\"\n", pPointer->filename);
+	printf("\t\t\t\t\t}\n");
+}
+
 void printImage(struct dashboard_element_image* pPointer) {
 	if (pPointer == 0) {
 		return;
 	}
 	printf("\t\t\t\t\timage: {\n");
 	printf("\t\t\t\t\t\tfilename: \"%s\"\n", pPointer->filename);
+	printf("\t\t\t\t\t}\n");
+}
+
+void printTime(struct dashboard_element_time* pPointer) {
+	if (pPointer == 0) {
+		return;
+	}
+	printf("\t\t\t\t\ttime: {\n");
+	printf("\t\t\t\t\t\tformat: \"%s\"\n", pPointer->format);
 	printf("\t\t\t\t\t}\n");
 }
 
@@ -22,7 +40,9 @@ void printElements(struct dashboard_element* pElements) {
 		printf("\t\t\t\t\tvsize: \"%s\",\n", pPointer->vsize);
 		printf("\t\t\t\t\tvposition: \"%s\",\n", pPointer->vposition);
 		printf("\t\t\t\t\tvplacement: \"%s\",\n", pPointer->vplacement);
+		printFile(pPointer->file);
 		printImage(pPointer->image);
+		printTime(pPointer->time);
 		printf("\t\t\t\t}%c\n", (pPointer->next == 0) ? '\0' : ',');
 		pPointer = pPointer->next;
 	}

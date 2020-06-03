@@ -4,8 +4,11 @@ void drawElementTime(struct dashboard_element* pElement) {
 	if (pElement == 0) {
 		return;
 	}
-	if (pElement->format == 0) {
-		pElement->format = strdup("%H:%M:%S");
+	if (pElement->time == 0) {
+		return;
+	}
+	if (pElement->time->format == 0) {
+		pElement->time->format = strdup("%H:%M:%S");
 	}
 
 	time_t now = time(0);
@@ -16,7 +19,7 @@ void drawElementTime(struct dashboard_element* pElement) {
 	long left = 0;
 	long top = 0;
 
-	strftime(buffer, 256, pElement->format, ts);
+	strftime(buffer, 256, pElement->time->format, ts);
 	if (pElement->hsize == 0) {
 		if (pElement->vsize == 0) {
 			TraceLog(LOG_ERROR, "drawElementTime 1");

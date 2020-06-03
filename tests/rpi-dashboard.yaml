@@ -7,74 +7,74 @@ dashboards:
     background: black
     elements:
       - name: Date
-        type: time
-        format: "%Y-%m-%d"
         hsize: 50%
         vposition: 0%
         color: white
+        time:
+          format: "%Y-%m-%d"
       - name: Time
-        type: time
-        format: "%H:%M"
         hsize: 100%
         vposition: Date.bottom
         color: white
+        time:
+          format: "%H:%M"
   - name: Weather
     background: skyblue
     elements:
       - name: Icon
-        type: image
-        filename: /tmp/rpi-db0/weather/icon-100x100.png
+        image:
+          filename: /tmp/rpi-db0/weather/icon-100x100.png
       - name: Date
-        type: time
-        format: "%Y-%m-%d"
         vsize: 10%
         vposition: 0%
         color: black
+        time:
+          format: "%Y-%m-%d"
       - name: Temperature
-        type: file
         vsize: 10%
         hposition: screen.right
         hplacement: left
         color: black
-        filename: /tmp/rpi-db0/weather/temperature
+        file:
+          filename: /tmp/rpi-db0/weather/temperature
       - name: Time
-        type: time
-        format: "%H:%M:%S"
         hsize: 100%
         hplacement: center
         vsize: 20%
         vposition: 80%
         color: black
+        time:
+          format: "%H:%M:%S"
   - name: Gmail
     background: white
     elements:
       - name: IconPersonal
-        type: image
         vsize: 70%
         vposition: 10%
-        filename: /tmp/rpi-db0/gmail/Gmail_Icon.png
+        image:
+          filename: /tmp/rpi-db0/gmail/Gmail_Icon.png
       - name: Date
-        type: time
-        format: "%Y-%m-%d"
         vsize: 10%
         color: black
+        time:
+          format: "%Y-%m-%d"
       - name: Count
-        type: file
         hposition: screen.right
         hplacement: left
         vsize: 10%
         color: black
-        filename: /tmp/rpi-db0/gmail/count
+        file:
+          filename: /tmp/rpi-db0/gmail/count
       - name: Email
-        type: paragraph
-        filename: /tmp/rpi-db0/gmail/email
         vposition: 10%
         vsize: 70%
+        file:
+          filename: /tmp/rpi-db0/gmail/email
       - name: Time
-        type: time
-        format: "%H:%M:%S"
         hsize: 100%
         hplacement: center
         vsize: 20%
         vposition: 80%
         color: black
+        time:
+          format: "%H:%M:%S"

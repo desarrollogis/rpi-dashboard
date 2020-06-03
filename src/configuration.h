@@ -7,21 +7,22 @@ extern long g_width;
 extern long g_height;
 extern long g_border;
 
+struct dashboard_element_file {
+	char* filename;
+};
+
 struct dashboard_element_image {
 	char* filename;
+	time_t modification;
+	Texture2D texture;
+};
+
+struct dashboard_element_time {
+	char* format;
 };
 
 struct dashboard_element {
 	char* name;
-	char* type;
-	//time type
-	char* format;
-	//file type
-	char* filename;
-	time_t modification;
-	//image type
-	Texture2D texture;
-	//image type
 	char* hsize;
 	char* hposition;
 	char* hplacement;
@@ -29,12 +30,14 @@ struct dashboard_element {
 	char* vposition;
 	char* vplacement;
 	Color color;
+	struct dashboard_element_file* file;
 	struct dashboard_element_image* image;
+	struct dashboard_element_time* time;
 	struct dashboard_element* next;
 };
 
 struct dashboard {
-	yaml_char_t* name;
+	char* name;
 	Color background;
 	struct dashboard_element* elements;
 	struct dashboard* next;

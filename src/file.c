@@ -9,14 +9,17 @@ void drawElementFile(struct dashboard_element* pElement) {
 	if (pElement == 0) {
 		return;
 	}
-	if (pElement->filename == 0) {
+	if (pElement->file == 0) {
+		return;
+	}
+	if (pElement->file->filename == 0) {
 		return;
 	}
 
-	FILE* input = fopen(pElement->filename, "r");
+	FILE* input = fopen(pElement->file->filename, "r");
 
 	if (input == 0) {
-		TraceLog(LOG_INFO, "drawElementFile ERROR: %s", pElement->filename);
+		TraceLog(LOG_INFO, "drawElementFile ERROR: %s", pElement->file->filename);
 		return;
 	}
 
