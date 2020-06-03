@@ -95,7 +95,8 @@ long getVSize(struct dashboard_element* pElement) {
 		long height = 0;
 
 		if (getCacheProperty("screen.height", &height)) {
-			size = size * height / 100;
+			size *= height;
+			size /= 100;
 		}
 	} else if (getCacheProperty("screen.height", &size)) {
 	} else {
@@ -112,7 +113,8 @@ long getHSize(struct dashboard_element* pElement) {
 		long width = 0;
 
 		if (getCacheProperty("screen.width", &width)) {
-			size = size * width / 100;
+			size *= width;
+			size /= 100;
 		}
 	} else if (getCacheProperty("screen.width", &size)) {
 	} else {
@@ -134,7 +136,8 @@ void getPosition(struct dashboard_element* pElement, long* pLeft, long* pTop) {
 		long left = 0;
 
 		if (getCacheProperty("screen.width", &width)) {
-			*pLeft *= width / 100;
+			*pLeft *= width;
+			*pLeft /= 100;
 		}
 		if (getCacheProperty("screen.left", &left)) {
 			*pLeft += left;
@@ -170,7 +173,8 @@ void getPosition(struct dashboard_element* pElement, long* pLeft, long* pTop) {
 		long top = 0;
 
 		if (getCacheProperty("screen.height", &height)) {
-			*pTop *= height / 100;
+			*pTop *= height;
+			*pTop /= 100;
 		}
 		if (getCacheProperty("screen.top", &top)) {
 			*pTop += top;
