@@ -66,6 +66,7 @@ dashboards:
         file:
           filename: /tmp/rpi-db0/gmail/count
       - name: Email
+        hsize: 50%
         vposition: 10%
         vsize: 70%
         file:
