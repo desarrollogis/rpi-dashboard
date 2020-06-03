@@ -1,11 +1,6 @@
 #include "space.h"
 
-//#define DEBUG_DRAWELEMENTFILE
-
 void drawElementFile(struct dashboard_element* pElement) {
-#ifdef DEBUG_DRAWELEMENTFILE
-	TraceLog(LOG_INFO, "drawElementFile(\"%s\"){", pElement->name);
-#endif
 	if (pElement == 0) {
 		return;
 	}
@@ -28,9 +23,10 @@ void drawElementFile(struct dashboard_element* pElement) {
 	long height = 0;
 	long left = 0;
 	long top = 0;
+	long oldTop;
+	long oldHeight;
 
 	fscanf(input, "%s", buffer);
-	fclose(input);
 	if (pElement->hsize == 0) {
 		if (pElement->vsize == 0) {
 			TraceLog(LOG_ERROR, "drawElementFile");
@@ -54,8 +50,22 @@ void drawElementFile(struct dashboard_element* pElement) {
 	getPosition(pElement, &left, &top);
 	setCacheProperty(pElement->name, "right", left + width);
 	setCacheProperty(pElement->name, "bottom", top + height);
+	oldTop = top;
+	oldHeight = height;
 	while ((height > 0) && (MeasureText(buffer, height) > width)) {
 		--height;
 	}
 	DrawText(buffer, left, top, height, pElement->color);
+	while (fscanf(input, "%s", buffer) > 0) {
+		top += height;
+		height = oldHeight;
+		while ((height > 0) && (MeasureText(buffer, height) > width)) {
+			--height;
+		}
+		if ((top + height) > (oldTop + oldHeight)) {
+			break;
+		}
+		DrawText(buffer, left, top, height, pElement->color);
+	}
+	fclose(input);
 }
