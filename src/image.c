@@ -17,7 +17,10 @@ void drawElementImage(struct dashboard_element* pElement) {
 	if (pElement == 0) {
 		return;
 	}
-	if (pElement->filename == 0) {
+	if (pElement->image == 0) {
+		return;
+	}
+	if (pElement->image->filename == 0) {
 		return;
 	}
 
@@ -34,7 +37,7 @@ void drawElementImage(struct dashboard_element* pElement) {
 
 	struct stat result;
 
-	if (stat(pElement->filename, &result) == 0) {
+	if (stat(pElement->image->filename, &result) == 0) {
 		if (result.st_mtime == pElement->modification) {
 			left = left + width / 2 - pElement->texture.width / 2;
 			top = top + height / 2 - pElement->texture.height / 2;
@@ -44,7 +47,7 @@ void drawElementImage(struct dashboard_element* pElement) {
 		pElement->modification = result.st_mtime;
 	}
 
-	Image icon = LoadImage(pElement->filename);
+	Image icon = LoadImage(pElement->image->filename);
 
 	adjustImage(width, height, &icon);
 	UnloadTexture(pElement->texture);

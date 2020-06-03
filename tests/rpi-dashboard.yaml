@@ -23,7 +23,7 @@ dashboards:
     elements:
       - name: Icon
         type: image
-        filename: /tmp/rpi-db0/weather/icon-200x200.png
+        filename: /tmp/rpi-db0/weather/icon-100x100.png
       - name: Date
         type: time
         format: "%Y-%m-%d"

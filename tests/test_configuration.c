@@ -1,22 +1,28 @@
 #include "raylib.h"
 #include "../src/configuration.h"
 
+void printImage(struct dashboard_element_image* pPointer) {
+	if (pPointer == 0) {
+		return;
+	}
+	printf("\t\t\t\t\timage: {\n");
+	printf("\t\t\t\t\t\tfilename: \"%s\"\n", pPointer->filename);
+	printf("\t\t\t\t\t}\n");
+}
+
 void printElements(struct dashboard_element* pElements) {
 	struct dashboard_element* pPointer = pElements;
 
 	while (pPointer) {
 		printf("\t\t\t\t{\n");
 		printf("\t\t\t\t\tname: \"%s\",\n", pPointer->name);
-		printf("\t\t\t\t\ttype: \"%s\",\n", pPointer->type);
 		printf("\t\t\t\t\thsize: \"%s\",\n", pPointer->hsize);
 		printf("\t\t\t\t\thposition: \"%s\",\n", pPointer->hposition);
 		printf("\t\t\t\t\thplacement: \"%s\",\n", pPointer->hplacement);
 		printf("\t\t\t\t\tvsize: \"%s\",\n", pPointer->vsize);
 		printf("\t\t\t\t\tvposition: \"%s\",\n", pPointer->vposition);
 		printf("\t\t\t\t\tvplacement: \"%s\",\n", pPointer->vplacement);
-		printf("\t\t\t\t\ttype: \"%s\",\n", pPointer->type);
-		printf("\t\t\t\t\ttype: \"%s\",\n", pPointer->type);
-		printf("\t\t\t\t\ttype: \"%s\",\n", pPointer->type);
+		printImage(pPointer->image);
 		printf("\t\t\t\t}%c\n", (pPointer->next == 0) ? '\0' : ',');
 		pPointer = pPointer->next;
 	}

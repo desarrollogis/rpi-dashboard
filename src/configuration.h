@@ -7,6 +7,10 @@ extern long g_width;
 extern long g_height;
 extern long g_border;
 
+struct dashboard_element_image {
+	char* filename;
+};
+
 struct dashboard_element {
 	char* name;
 	char* type;
@@ -25,6 +29,7 @@ struct dashboard_element {
 	char* vposition;
 	char* vplacement;
 	Color color;
+	struct dashboard_element_image* image;
 	struct dashboard_element* next;
 };
 

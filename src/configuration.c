@@ -22,6 +22,47 @@ void getElementColor(yaml_char_t* value, struct dashboard_element* pElement) {
 	}
 }
 
+struct dashboard_element_image* parseImage() {
+	struct dashboard_element_image* pElement = malloc(sizeof(struct dashboard_element_image));
+
+	if (pElement == 0) {
+		return 0;
+	}
+	pElement->filename = 0;
+
+	bool done = false;
+	bool isValue = false;
+	char value[256];
+
+	while (!done) {
+		if (!yaml_parser_parse(&parser, &event)) {
+			break;
+		}
+		switch (event.type) {
+			case YAML_SCALAR_EVENT:
+				if (isValue) {
+					if (strcmp(value, "filename") == 0) {
+						pElement->filename = strdup((char *)event.data.scalar.value);
+					} else {
+						TraceLog(LOG_ERROR, "parseImage");
+					}
+					isValue = false;
+				} else {
+					strcpy(value, (char*)event.data.scalar.value);
+					isValue = true;
+				}
+				break;
+			case YAML_MAPPING_END_EVENT:
+				done = true;
+				break;
+			default:
+				TraceLog(LOG_ERROR, "parseImage");
+				break;
+		}
+	}
+	return pElement;
+}
+
 struct dashboard_element* parseDashboardElementsProperties() {
 	struct dashboard_element* pElement = malloc(sizeof(struct dashboard_element));
 
@@ -41,6 +82,7 @@ struct dashboard_element* parseDashboardElementsProperties() {
 	pElement->vposition = 0;
 	pElement->vplacement = 0;
 	pElement->color = BLACK;
+	pElement->image = 0;
 	pElement->next = 0;
 
 	bool done = false;
@@ -83,6 +125,14 @@ struct dashboard_element* parseDashboardElementsProperties() {
 				} else {
 					strcpy(value, (char*)event.data.scalar.value);
 					isValue = true;
+				}
+				break;
+			case YAML_MAPPING_START_EVENT:
+				if (isValue) {
+					if (strcmp(value, "image") == 0) {
+						pElement->image = parseImage();
+					}
+					isValue = false;
 				}
 				break;
 			case YAML_MAPPING_END_EVENT:
