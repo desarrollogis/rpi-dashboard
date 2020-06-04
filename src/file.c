@@ -26,6 +26,7 @@ void drawElementFile(struct dashboard_element* pElement) {
 	long oldTop;
 	long oldHeight;
 
+	buffer[0] = 0;
 	fscanf(input, "%s", buffer);
 	if (pElement->hsize == 0) {
 		if (pElement->vsize == 0) {
