@@ -1,6 +1,17 @@
 #include "raylib.h"
 #include "../src/configuration.h"
 
+void printBar(struct dashboard_element_bar* pPointer) {
+	if (pPointer == 0) {
+		return;
+	}
+	printf("\t\t\t\t\t\"bar\": {\n");
+	printf("\t\t\t\t\t\t\"min\": %f,\n", pPointer->min);
+	printf("\t\t\t\t\t\t\"max\": %f,\n", pPointer->max);
+	printf("\t\t\t\t\t\t\"filename\": \"%s\"\n", pPointer->filename);
+	printf("\t\t\t\t\t}\n");
+}
+
 void printFile(struct dashboard_element_file* pPointer) {
 	if (pPointer == 0) {
 		return;
@@ -33,17 +44,18 @@ void printElements(struct dashboard_element* pElements) {
 
 	while (pPointer) {
 		printf("\t\t\t\t{\n");
-		printf("\t\t\t\t\tname: \"%s\",\n", pPointer->name);
-		printf("\t\t\t\t\thsize: \"%s\",\n", pPointer->hsize);
-		printf("\t\t\t\t\thposition: \"%s\",\n", pPointer->hposition);
-		printf("\t\t\t\t\thplacement: \"%s\",\n", pPointer->hplacement);
-		printf("\t\t\t\t\tvsize: \"%s\",\n", pPointer->vsize);
-		printf("\t\t\t\t\tvposition: \"%s\",\n", pPointer->vposition);
-		printf("\t\t\t\t\tvplacement: \"%s\",\n", pPointer->vplacement);
+		printf("\t\t\t\t\t\"name\": \"%s\",\n", pPointer->name);
+		printf("\t\t\t\t\t\"hsize\": \"%s\",\n", pPointer->hsize);
+		printf("\t\t\t\t\t\"hposition\": \"%s\",\n", pPointer->hposition);
+		printf("\t\t\t\t\t\"hplacement\": \"%s\",\n", pPointer->hplacement);
+		printf("\t\t\t\t\t\"vsize\": \"%s\",\n", pPointer->vsize);
+		printf("\t\t\t\t\t\"vposition\": \"%s\",\n", pPointer->vposition);
+		printf("\t\t\t\t\t\"vplacement\": \"%s\",\n", pPointer->vplacement);
+		printBar(pPointer->bar);
 		printFile(pPointer->file);
 		printImage(pPointer->image);
 		printTime(pPointer->time);
-		printf("\t\t\t\t}%c\n", (pPointer->next == 0) ? '\0' : ',');
+		printf("\t\t\t\t}%c\n", (pPointer->next == 0) ? ' ' : ',');
 		pPointer = pPointer->next;
 	}
 }
@@ -58,14 +70,14 @@ int main(int argc, char* argv[]) {
 	struct dashboard* pPointer = pDashboards;
 
 	printf("{\n");
-	printf("\twidth: %ld,\n", g_width);
-	printf("\theight: %ld,\n", g_height);
-	printf("\tborder: %ld,\n", g_border);
-	printf("\tdashboards: [\n");
+	printf("\t\"width\": %ld,\n", g_width);
+	printf("\t\"height\": %ld,\n", g_height);
+	printf("\t\"border\": %ld,\n", g_border);
+	printf("\t\"dashboards\": [\n");
 	do {
 		printf("\t\t{\n");
-		printf("\t\t\tname: \"%s\",\n", pPointer->name);
-		printf("\t\t\telements: [\n");
+		printf("\t\t\t\"name\": \"%s\",\n", pPointer->name);
+		printf("\t\t\t\"elements\": [\n");
 		printElements(pPointer->elements);
 		printf("\t\t\t]\n");
 		printf("\t\t}");

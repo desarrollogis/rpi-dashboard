@@ -7,6 +7,13 @@ extern long g_width;
 extern long g_height;
 extern long g_border;
 
+struct dashboard_element_bar {
+	float min;
+	float max;
+	char* filename;
+	long _value;
+};
+
 struct dashboard_element_file {
 	char* filename;
 };
@@ -30,6 +37,7 @@ struct dashboard_element {
 	char* vposition;
 	char* vplacement;
 	Color color;
+	struct dashboard_element_bar* bar;
 	struct dashboard_element_file* file;
 	struct dashboard_element_image* image;
 	struct dashboard_element_time* time;

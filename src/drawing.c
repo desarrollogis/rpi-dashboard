@@ -1,14 +1,17 @@
 #include <search.h>
 #include "drawing.h"
-#include "time.h"
+#include "bar.h"
 #include "file.h"
 #include "image.h"
+#include "time.h"
 
 void drawElement(struct dashboard_element* pElement) {
 	if (pElement == 0) {
 		return;
 	}
-	if (pElement->file != 0) {
+	if (pElement->bar != 0) {
+		drawElementBar(pElement);
+	} else if (pElement->file != 0) {
 		drawElementFile(pElement);
 	} else if (pElement->image != 0) {
 		drawElementImage(pElement);

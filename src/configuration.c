@@ -22,6 +22,54 @@ void getElementColor(yaml_char_t* value, struct dashboard_element* pElement) {
 	}
 }
 
+struct dashboard_element_bar* parseBar() {
+	struct dashboard_element_bar* pElement = malloc(sizeof(struct dashboard_element_bar));
+
+	if (pElement == 0) {
+		return 0;
+	}
+	pElement->min = 0.0;
+	pElement->max = 100.0;
+	pElement->filename = 0;
+	pElement->_value = 0;
+
+	bool done = false;
+	bool isValue = false;
+	char value[256];
+
+	while (!done) {
+		if (!yaml_parser_parse(&parser, &event)) {
+			break;
+		}
+		switch (event.type) {
+			case YAML_SCALAR_EVENT:
+				if (isValue) {
+					if (strcmp(value, "min") == 0) {
+						sscanf((char *)event.data.scalar.value, "%f", &pElement->min);
+					} else if (strcmp(value, "max") == 0) {
+						sscanf((char *)event.data.scalar.value, "%f", &pElement->max);
+					} else if (strcmp(value, "filename") == 0) {
+						pElement->filename = strdup((char *)event.data.scalar.value);
+					} else {
+						TraceLog(LOG_ERROR, "parseBar");
+					}
+					isValue = false;
+				} else {
+					strcpy(value, (char*)event.data.scalar.value);
+					isValue = true;
+				}
+				break;
+			case YAML_MAPPING_END_EVENT:
+				done = true;
+				break;
+			default:
+				TraceLog(LOG_ERROR, "parseBar");
+				break;
+		}
+	}
+	return pElement;
+}
+
 struct dashboard_element_file* parseFile() {
 	struct dashboard_element_file* pElement = malloc(sizeof(struct dashboard_element_file));
 
@@ -160,6 +208,7 @@ struct dashboard_element* parseDashboardElementsProperties() {
 	pElement->vposition = 0;
 	pElement->vplacement = 0;
 	pElement->color = BLACK;
+	pElement->bar = 0;
 	pElement->file = 0;
 	pElement->image = 0;
 	pElement->time = 0;
@@ -203,7 +252,9 @@ struct dashboard_element* parseDashboardElementsProperties() {
 				break;
 			case YAML_MAPPING_START_EVENT:
 				if (isValue) {
-					if (strcmp(value, "file") == 0) {
+					if (strcmp(value, "bar") == 0) {
+						pElement->bar = parseBar();
+					} else if (strcmp(value, "file") == 0) {
 						pElement->file = parseFile();
 					} else if (strcmp(value, "image") == 0) {
 						pElement->image = parseImage();
