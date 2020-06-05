@@ -1,5 +1,7 @@
 #include "space.h"
 
+#define LINE_MAX 1024
+
 void drawElementFile(struct dashboard_element* pElement) {
 	if (pElement == 0) {
 		return;
@@ -18,7 +20,7 @@ void drawElementFile(struct dashboard_element* pElement) {
 		return;
 	}
 
-	char buffer[256];
+	char buffer[LINE_MAX];
 	long width = 0;
 	long height = 0;
 	long left = 0;
@@ -27,7 +29,9 @@ void drawElementFile(struct dashboard_element* pElement) {
 	long oldHeight;
 
 	buffer[0] = 0;
-	fscanf(input, "%s", buffer);
+	if (fgets(buffer, sizeof buffer, input) == 0) {
+		return;
+	}
 	if (pElement->hsize == 0) {
 		if (pElement->vsize == 0) {
 			TraceLog(LOG_ERROR, "drawElementFile");
@@ -57,7 +61,7 @@ void drawElementFile(struct dashboard_element* pElement) {
 		--height;
 	}
 	DrawText(buffer, left, top, height, pElement->color);
-	while (fscanf(input, "%s", buffer) > 0) {
+	while (fgets(buffer, sizeof buffer, input) != 0) {
 		top += height;
 		height = oldHeight;
 		while ((height > 0) && (MeasureText(buffer, height) > width)) {
