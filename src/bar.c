@@ -57,6 +57,7 @@ void drawElementBar(struct dashboard_element* pElement) {
 	long left = 0;
 	long top = 0;
 	long position;
+	Color color = BLACK;
 
 	hsize = getHSize(pElement);
 	vsize = getVSize(pElement);
@@ -79,5 +80,19 @@ void drawElementBar(struct dashboard_element* pElement) {
 			pElement->bar->_value -= 10;
 		}
 	}
-	DrawRectangle(left, top + (vsize - pElement->bar->_value), hsize, pElement->bar->_value, BLACK);
+
+	float percent = (float)pElement->bar->_value / (float)vsize;
+
+	if (percent <= 0.2) {
+		color = GREEN;
+	} else if (percent <= 0.4) {
+		color = BLUE;
+	} else if (percent <= 0.6) {
+		color = YELLOW;
+	} else if (percent <= 0.8) {
+		color = ORANGE;
+	} else if (percent <= 1.0) {
+		color = RED;
+	}
+	DrawRectangle(left, top + (vsize - pElement->bar->_value), hsize, pElement->bar->_value, color);
 }
