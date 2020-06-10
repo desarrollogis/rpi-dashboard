@@ -12,7 +12,7 @@ int main(int argc, char* argv[]) {
 
 	InitWindow(g_width, g_height, "dashboard");
 	SetConfigFlags(FLAG_VSYNC_HINT);
-	SetTargetFPS(10);
+	//SetTargetFPS(10);
 	while (!WindowShouldClose()) {
 		BeginDrawing();
 		drawDashboard(pPointer);
