@@ -2,7 +2,7 @@
 #include <regex.h>
 #include "configuration.h"
 
-#define DEBUG_SETCACHEPROPERTY
+//#define DEBUG_SETCACHEPROPERTY
 //#define DEBUG_GETPOSITION
 
 void setCacheProperty(struct dashboard_element* pElement, const char* propertyName, const long value) {
