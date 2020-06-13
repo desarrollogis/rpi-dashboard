@@ -61,11 +61,11 @@ void drawElementBar(struct dashboard_element* pElement) {
 
 	hsize = getHSize(pElement);
 	vsize = getVSize(pElement);
-	setCacheProperty(pElement->name, "width", hsize);
-	setCacheProperty(pElement->name, "height", vsize);
+	setCacheProperty(pElement, "width", hsize);
+	setCacheProperty(pElement, "height", vsize);
 	getPosition(pElement, &left, &top);
-	setCacheProperty(pElement->name, "right", left + hsize);
-	setCacheProperty(pElement->name, "bottom", top + vsize);
+	setCacheProperty(pElement, "right", left + hsize);
+	setCacheProperty(pElement, "bottom", top + vsize);
 	position = vsize * value;
 	if (pElement->bar->_value < position) {
 		if ((position - pElement->bar->_value) < 10) {
@@ -95,4 +95,5 @@ void drawElementBar(struct dashboard_element* pElement) {
 		color = RED;
 	}
 	DrawRectangle(left, top + (vsize - pElement->bar->_value), hsize, pElement->bar->_value, color);
+	pElement->_measure = false;
 }

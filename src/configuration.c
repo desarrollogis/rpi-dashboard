@@ -1,12 +1,15 @@
-#include <limits.h>
-#include <unistd.h>
-#include <regex.h>
+#include <search.h>
+//#include <limits.h>
+//#include <unistd.h>
+//#include <regex.h>
 #include "raylib.h"
 #include "configuration.h"
+#include "space.h"
 
 long g_width = 800;
 long g_height = 600;
 long g_border = 50;
+long g_elements = 1;
 yaml_parser_t parser;
 yaml_event_t event;
 
@@ -67,6 +70,7 @@ struct dashboard_element_bar* parseBar() {
 				break;
 		}
 	}
+	++g_elements;
 	return pElement;
 }
 
@@ -108,6 +112,7 @@ struct dashboard_element_file* parseFile() {
 				break;
 		}
 	}
+	++g_elements;
 	return pElement;
 }
 
@@ -150,6 +155,7 @@ struct dashboard_element_image* parseImage() {
 				break;
 		}
 	}
+	++g_elements;
 	return pElement;
 }
 
@@ -191,6 +197,7 @@ struct dashboard_element_time* parseTime() {
 				break;
 		}
 	}
+	++g_elements;
 	return pElement;
 }
 
@@ -208,10 +215,12 @@ struct dashboard_element* parseDashboardElementsProperties() {
 	pElement->vposition = 0;
 	pElement->vplacement = 0;
 	pElement->color = BLACK;
+	pElement->_dashboard = 0;
 	pElement->bar = 0;
 	pElement->file = 0;
 	pElement->image = 0;
 	pElement->time = 0;
+	pElement->_measure = true;
 	pElement->next = 0;
 
 	bool done = false;
@@ -275,7 +284,7 @@ struct dashboard_element* parseDashboardElementsProperties() {
 	return pElement;
 }
 
-struct dashboard_element* parseDashboardElements() {
+struct dashboard_element* parseDashboardElements(struct dashboard* pDashboard) {
 	struct dashboard_element* pList;
 	struct dashboard_element* pPointer;
 	bool done = false;
@@ -296,6 +305,7 @@ struct dashboard_element* parseDashboardElements() {
 				if (pItem == 0) {
 					TraceLog(LOG_ERROR, "parseDashboardElements");
 				} else {
+					pItem->_dashboard = pDashboard;
 					if (pPointer == 0) {
 						pList = pPointer = pItem;
 					} else {
@@ -361,7 +371,7 @@ struct dashboard* parseDashboardProperties() {
 				break;
 			case YAML_SEQUENCE_START_EVENT:
 				if (strcmp(value, "elements") == 0) {
-					pDashboard->elements = parseDashboardElements();
+					pDashboard->elements = parseDashboardElements(pDashboard);
 					isValue = false;
 				} else {
 					TraceLog(LOG_ERROR, "parseDashboardProperties 2");
@@ -587,5 +597,12 @@ struct dashboard* loadConfiguration(int argc, char* argv[]) {
 	struct dashboard* pDashboards = parseConfiguration(buffer, size);
 
 	free(buffer);
+	hcreate(g_elements * 6);
+	setCacheProperty(0, "width", g_width - g_border * 2);
+	setCacheProperty(0, "height", g_height - g_border * 2);
+	setCacheProperty(0, "left", g_border);
+	setCacheProperty(0, "top", g_border);
+	setCacheProperty(0, "right", g_width - g_border);
+	setCacheProperty(0, "bottom", g_height - g_border);
 	return pDashboards;
 }

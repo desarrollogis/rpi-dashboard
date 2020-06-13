@@ -29,11 +29,11 @@ void drawElementImage(struct dashboard_element* pElement) {
 	long left = 0;
 	long top = 0;
 
-	setCacheProperty(pElement->name, "width", width);
-	setCacheProperty(pElement->name, "height", height);
+	setCacheProperty(pElement, "width", width);
+	setCacheProperty(pElement, "height", height);
 	getPosition(pElement, &left, &top);
-	setCacheProperty(pElement->name, "right", left + width);
-	setCacheProperty(pElement->name, "bottom", top + height);
+	setCacheProperty(pElement, "right", left + width);
+	setCacheProperty(pElement, "bottom", top + height);
 
 	struct stat result;
 
@@ -56,4 +56,5 @@ void drawElementImage(struct dashboard_element* pElement) {
 	left = left + width / 2 - pElement->image->texture.width / 2;
 	top = top + height / 2 - pElement->image->texture.height / 2;
 	DrawTexture(pElement->image->texture, left, top, WHITE);
+	pElement->_measure = false;
 }

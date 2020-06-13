@@ -50,11 +50,11 @@ void drawElementFile(struct dashboard_element* pElement) {
 			height = getVSize(pElement);
 		}
 	}
-	setCacheProperty(pElement->name, "width", width);
-	setCacheProperty(pElement->name, "height", height);
+	setCacheProperty(pElement, "width", width);
+	setCacheProperty(pElement, "height", height);
 	getPosition(pElement, &left, &top);
-	setCacheProperty(pElement->name, "right", left + width);
-	setCacheProperty(pElement->name, "bottom", top + height);
+	setCacheProperty(pElement, "right", left + width);
+	setCacheProperty(pElement, "bottom", top + height);
 	oldTop = top;
 	oldHeight = height;
 	while ((height > 0) && (MeasureText(buffer, height) > width)) {
@@ -73,4 +73,5 @@ void drawElementFile(struct dashboard_element* pElement) {
 		DrawText(buffer, left, top, height, pElement->color);
 	}
 	fclose(input);
+	pElement->_measure = false;
 }

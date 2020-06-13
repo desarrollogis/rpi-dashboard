@@ -37,11 +37,13 @@ struct dashboard_element {
 	char* vposition;
 	char* vplacement;
 	Color color;
+	struct dashboard* _dashboard;
 	struct dashboard_element_bar* bar;
 	struct dashboard_element_file* file;
 	struct dashboard_element_image* image;
 	struct dashboard_element_time* time;
 	struct dashboard_element* next;
+	bool _measure;
 };
 
 struct dashboard {
