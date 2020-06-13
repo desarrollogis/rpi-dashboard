@@ -93,6 +93,7 @@ bool getPercent(char* value, long* pResult) {
 			char* buffer = strndup(&value[groups[1].rm_so], groups[1].rm_eo - groups[1].rm_so);
 
 			sscanf(buffer, "%ld", pResult);
+			free(buffer);
 			found = true;
 		}
 	}
