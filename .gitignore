@@ -54,3 +54,6 @@ apps/minimal
 tests/test_configuration
 .e
 tests/test_drawing
+.g.data
+.g.temp
+.p
