@@ -20,6 +20,9 @@ int main(int argc, char* argv[]) {
 		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
 			pPointer = pPointer->next;
 		}
+		if (IsKeyPressed(KEY_ENTER)) {
+			pPointer = pPointer->next;
+		}
 	}
 	CloseWindow();
 	return 0;
