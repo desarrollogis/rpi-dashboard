@@ -323,14 +323,21 @@ struct dashboard_element* parseDashboardElements(struct dashboard* pDashboard) {
 }
 
 void getDashboardBackground(yaml_char_t* value, struct dashboard* pItem) {
-	if (strcmp((char*)value, "skyblue") == 0) {
-		pItem->background = SKYBLUE;
-	}
 	if (strcmp((char*)value, "black") == 0) {
 		pItem->background = BLACK;
+		return;
+	}
+	if (strcmp((char*)value, "red") == 0) {
+		pItem->background = RED;
+		return;
+	}
+	if (strcmp((char*)value, "skyblue") == 0) {
+		pItem->background = SKYBLUE;
+		return;
 	}
 	if (strcmp((char*)value, "white") == 0) {
 		pItem->background = WHITE;
+		return;
 	}
 }
 
